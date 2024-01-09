@@ -6,9 +6,11 @@ shopt -q
 #
 # Per il check su nuove distribuzioni (p.e. Mint) agguingere il nome dell'array di comptenza
 # Script creato da Luigi Cassolini
-# Si consiglia di posizionare lo script in /opt/update/
+# Si consiglia di posizionare lo script in /opt/cdpgk/
 #
 #*******************************************************
+#
+# Codice creato da Luigi Cassolini e distribuito con GPL V3.0
 #
 declare -a REDHAT_LIKE=( "Rocky" "Centos" )
 declare -a DEBIAN_LIKE=( "Debian" "Ubuntu" )
