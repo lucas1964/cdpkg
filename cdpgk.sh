@@ -20,17 +20,20 @@ OS=$(cat /etc/*release | grep ^NAME)
 LINE="==============================================="
 update_date=$(date +%d-%m-%Y)
 update_time=$(date +%H:%M)
+LOGpath="/opt/cdpkg/"
+file="cron_download_update.log"
+LOGfile="$LOGpath$file"
 
 #UPDATE per Piattaforme Red Hat Like
 for i in "${REDHAT_LIKE[@]}"
 do
         if  echo "$OS" | grep -q $i; then
                 echo $LINE>cron_download_update.log
-                echo "Execution date time: $update_date at $update_time">>cron_download_update.log
-                echo $LINE>>cron_download_update.log
-                yum check-update>>cron_download_update.log
+                echo "Execution date time: $update_date at $update_time">>$LOGfile
+                echo $LINE>>$LOGfile
+                yum check-update>>$LOGfile
                 yum update --downloadonly -y
-                echo $LINE>>cron_download_update.log
+                echo $LINE>>$LOGfile
         fi
 done
 
@@ -39,16 +42,17 @@ for i in "${DEBIAN_LIKE[@]}"
 do
         if  echo "$OS" | grep -q $i; then
                 echo "Start at $update_date $update_time"
-                echo $LINE>cron_download_update.log
-                echo "Execution date time: $update_date at $update_time">>cron_download_update.log
-                echo $LINE>>cron_download_update.log
+                echo $LINE>$LOGfile
+                echo "Execution date time: $update_date at $update_time">>$LOGfile
+                echo $LINE>>$LOGfile
                 /usr/bin/apt update &> /dev/null
-                /usr/bin/apt list --upgradable>>cron_download_update.log 2> /dev/null
+                /usr/bin/apt list --upgradable>>$LOGfile 2> /dev/null
                 /usr/bin/apt -y -d upgrade &> /dev/null
 
         fi
 done
-echo $LINE>>cron_download_update.log
-echo "End at   $update_date $update_time">>cron_download_update.log
-echo $LINE>>cron_download_update.log
+echo $LINE>>$LOGfile
+echo "End at   $update_date $update_time">>$LOGfile
+echo $LINE>>$LOGfile
+echo "End at $update_date $update_time"
 exit 0
