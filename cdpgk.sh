@@ -28,7 +28,7 @@ LOGfile="$LOGpath$file"
 for i in "${REDHAT_LIKE[@]}"
 do
         if  echo "$OS" | grep -q $i; then
-                echo $LINE>cron_download_update.log
+                echo $LINE>$LOGfile
                 echo "Execution date time: $update_date at $update_time">>$LOGfile
                 echo $LINE>>$LOGfile
                 yum check-update>>$LOGfile
