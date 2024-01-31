@@ -31,8 +31,8 @@ do
                 echo $LINE>$LOGfile
                 echo "Execution date time: $update_date at $update_time">>$LOGfile
                 echo $LINE>>$LOGfile
-                yum check-update>>$LOGfile
-                yum update --downloadonly -y
+                yum check-update>>$LOGfile 2>/dev/null
+                yum update --downloadonly -y 2>/dev/null
                 echo $LINE>>$LOGfile
         fi
 done
