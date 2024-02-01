@@ -31,9 +31,9 @@ do
                 echo $LINE>$LOGfile
                 echo "Execution date time: $update_date at $update_time">>$LOGfile
                 echo $LINE>>$LOGfile
-                yum check-update>>$LOGfile >/dev/null
+                yum check-update>>$LOGfile
                 echo $LINE>>$LOGfile
-                yum update --downloadonly -y >/dev/null
+                yum update --downloadonly -y
                 echo $LINE>>$LOGfile
         fi
 done
@@ -46,10 +46,10 @@ do
                 echo $LINE>$LOGfile
                 echo "Execution date time: $update_date at $update_time">>$LOGfile
                 echo $LINE>>$LOGfile
-                /usr/bin/apt update &> /dev/null
+                /usr/bin/apt update
                 echo $LINE>>$LOGfile
-                /usr/bin/apt list --upgradable>>$LOGfile > /dev/null
-                /usr/bin/apt -y -d upgrade > /dev/null
+                /usr/bin/apt list --upgradable>>$LOGfile
+                /usr/bin/apt -y -d upgrade
 
         fi
 done
