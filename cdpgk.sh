@@ -12,7 +12,7 @@
 #
 # Codice creato da Luigi Cassolini e distribuito con GPL V3.0
 #
-declare -a REDHAT_LIKE=( "Rocky" "Centos" )
+declare -a REDHAT_LIKE=( "Rocky" "Centos" "Rocky Linux" )
 declare -a DEBIAN_LIKE=( "Debian" "Ubuntu" )
 
 DOWNLOAD="Download packages on"
@@ -31,8 +31,9 @@ do
                 echo $LINE>$LOGfile
                 echo "Execution date time: $update_date at $update_time">>$LOGfile
                 echo $LINE>>$LOGfile
-                yum check-update>>$LOGfile 2>/dev/null
-                yum update --downloadonly -y 2>/dev/null
+                yum check-update>>$LOGfile >/dev/null
+                echo $LINE>>$LOGfile
+                yum update --downloadonly -y >/dev/null
                 echo $LINE>>$LOGfile
         fi
 done
@@ -46,8 +47,9 @@ do
                 echo "Execution date time: $update_date at $update_time">>$LOGfile
                 echo $LINE>>$LOGfile
                 /usr/bin/apt update &> /dev/null
-                /usr/bin/apt list --upgradable>>$LOGfile 2> /dev/null
-                /usr/bin/apt -y -d upgrade &> /dev/null
+                echo $LINE>>$LOGfile
+                /usr/bin/apt list --upgradable>>$LOGfile > /dev/null
+                /usr/bin/apt -y -d upgrade > /dev/null
 
         fi
 done
