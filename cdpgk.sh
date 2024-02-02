@@ -55,7 +55,7 @@ do
         fi
 done
 echo $LINE>>$LOGfile
-echo "End at   $update_date $update_time">>$LOGfile
+echo "End at $update_date $update_time">>$LOGfile
 echo $LINE>>$LOGfile
-echo "End at $update_date $update_time"
+
 exit 0
