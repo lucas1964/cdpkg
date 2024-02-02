@@ -1,10 +1,10 @@
 #!/bin/bash
-#set -e
+set -e
 #shopt -q
 #
 #******************************************************
 #
-# Per il check su nuove distribuzioni (p.e. Mint) agguingere il nome dell'array di comptenza
+# Per il check su nuove distribuzioni (p.e. Mint) agguingere il nome dell'array di comptenza senza spazi
 # Script creato da Luigi Cassolini
 # Si consiglia di posizionare lo script in /opt/cdpgk/
 #
@@ -12,17 +12,21 @@
 #
 # Codice creato da Luigi Cassolini e distribuito con GPL V3.0
 #
-declare -a REDHAT_LIKE=( "Rocky" "Centos" "Rocky Linux" )
+declare -a REDHAT_LIKE=( "RockyLinux" "Centos" "Rocky" )
 declare -a DEBIAN_LIKE=( "Debian" "Ubuntu" )
 
 DOWNLOAD="Download packages on"
 OS=$(cat /etc/*release | grep ^NAME)
+OS=$(echo $OS | tr -d ' ')
 LINE="==============================================="
 update_date=$(date +%d-%m-%Y)
 update_time=$(date +%H:%M)
 LOGpath="/opt/cdpkg/"
 file="cron_download_update.log"
 LOGfile="$LOGpath$file"
+YUM=/usr/bin/yum
+APT=/usr/bin/apt
+
 
 #UPDATE per Piattaforme Red Hat Like
 for i in "${REDHAT_LIKE[@]}"
@@ -31,12 +35,11 @@ do
                 echo $LINE>$LOGfile
                 echo "Execution date time: $update_date at $update_time">>$LOGfile
                 echo $LINE>>$LOGfile
-                yum check-update>>$LOGfile
-                echo $LINE>>$LOGfile
-                yum update --downloadonly -y
-                echo $LINE>>$LOGfile
+                $YUM check-update>>$LOGfile&&echo $LINE>>$LOGfile
+                $YUM update --downloadonly -y>>$LOGfile&&echo $LINE>>$LOGfile
         fi
 done
+
 
 #UPDATE per Piattaforme Debian Like
 for i in "${DEBIAN_LIKE[@]}"
@@ -46,10 +49,8 @@ do
                 echo $LINE>$LOGfile
                 echo "Execution date time: $update_date at $update_time">>$LOGfile
                 echo $LINE>>$LOGfile
-                /usr/bin/apt update
-                echo $LINE>>$LOGfile
-                /usr/bin/apt list --upgradable>>$LOGfile
-                /usr/bin/apt -y -d upgrade
+                $APT update && echo $LINE>>$LOGfile
+                $APT list --upgradable>>$LOGfile && $APT -y -d upgrade>>$LOGfile
 
         fi
 done
