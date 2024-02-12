@@ -26,6 +26,8 @@ file="cron_download_update.log"
 LOGfile="$LOGpath$file"
 YUM=/usr/bin/yum
 APT=/usr/bin/apt
+PGEXC="--disablerepo=pgdg14 --disablerepo=zabbix --disablerepo=zabbix-agent2-plugins --disablerepo=pgdg-common"
+
 
 
 #UPDATE per Piattaforme Red Hat Like
@@ -35,8 +37,8 @@ do
                 echo $LINE>$LOGfile
                 echo "Execution date time: $update_date at $update_time">>$LOGfile
                 echo $LINE>>$LOGfile
-                $YUM check-update>>$LOGfile&&echo $LINE>>$LOGfile
-                $YUM update --downloadonly -y>>$LOGfile&&echo $LINE>>$LOGfile
+                $YUM check-update $PGEXC>>$LOGfile&&echo $LINE>>$LOGfile
+                $YUM update --downloadonly $PGEXC -y>>$LOGfile&&echo $LINE>>$LOGfile
         fi
 done
 
