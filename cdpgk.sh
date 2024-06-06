@@ -57,6 +57,8 @@ do
         fi
 done
 echo $LINE>>$LOGfile
+update_date=$(date +%d-%m-%Y)
+update_time=$(date +%H:%M)
 echo "End at $update_date $update_time">>$LOGfile
 echo $LINE>>$LOGfile
 
